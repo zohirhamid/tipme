@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from environ import Env
+from datetime import timedelta
 
 env = Env()
 
@@ -33,8 +34,20 @@ INSTALLED_APPS = [
 	"staff",
 	"tips",
 	"core",
+	'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -113,3 +126,9 @@ LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+REST_AUTH = {
+	'USE_JWT': True,
+	'JWT_AUTH_COOKIE': 'djangojwdauth_cookie'
+}
